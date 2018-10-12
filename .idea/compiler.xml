@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dubbo" />
+        <module name="dubbo-admin" />
+        <module name="dubbo-cluster" />
+        <module name="dubbo-common" />
+        <module name="dubbo-config-api" />
+        <module name="dubbo-config-spring" />
+        <module name="dubbo-container-api" />
+        <module name="dubbo-container-jetty" />
+        <module name="dubbo-container-log4j" />
+        <module name="dubbo-container-logback" />
+        <module name="dubbo-container-spring" />
+        <module name="dubbo-demo-api" />
+        <module name="dubbo-demo-consumer" />
+        <module name="dubbo-demo-provider" />
+        <module name="dubbo-filter-cache" />
+        <module name="dubbo-filter-validation" />
+        <module name="dubbo-monitor-api" />
+        <module name="dubbo-monitor-default" />
+        <module name="dubbo-monitor-simple" />
+        <module name="dubbo-registry-api" />
+        <module name="dubbo-registry-default" />
+        <module name="dubbo-registry-multicast" />
+        <module name="dubbo-registry-redis" />
+        <module name="dubbo-registry-simple" />
+        <module name="dubbo-registry-zookeeper" />
+        <module name="dubbo-remoting-api" />
+        <module name="dubbo-remoting-grizzly" />
+        <module name="dubbo-remoting-http" />
+        <module name="dubbo-remoting-mina" />
+        <module name="dubbo-remoting-netty" />
+        <module name="dubbo-remoting-p2p" />
+        <module name="dubbo-remoting-zookeeper" />
+        <module name="dubbo-rpc-api" />
+        <module name="dubbo-rpc-default" />
+        <module name="dubbo-rpc-hessian" />
+        <module name="dubbo-rpc-http" />
+        <module name="dubbo-rpc-injvm" />
+        <module name="dubbo-rpc-memcached" />
+        <module name="dubbo-rpc-redis" />
+        <module name="dubbo-rpc-rmi" />
+        <module name="dubbo-rpc-thrift" />
+        <module name="dubbo-rpc-webservice" />
+        <module name="dubbo-test-benchmark" />
+        <module name="dubbo-test-compatibility" />
+        <module name="dubbo-test-examples" />
+        <module name="dubbo-test-integration" />
+        <module name="hessian-lite" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
