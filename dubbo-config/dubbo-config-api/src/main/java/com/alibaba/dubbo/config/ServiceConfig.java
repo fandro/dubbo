@@ -279,7 +279,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void doExportUrls() {
-        List<URL> registryURLs = loadRegistries(true);
+        List<URL> registryURLs = loadRegistries(true);// 获取zookeeper注册信息(地址和端口)
         for (ProtocolConfig protocolConfig : protocols) {
             doExportUrlsFor1Protocol(protocolConfig, registryURLs);
         }
@@ -288,7 +288,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
     private void doExportUrlsFor1Protocol(ProtocolConfig protocolConfig, List<URL> registryURLs) {
         String name = protocolConfig.getName();
         if (name == null || name.length() == 0) {
-            name = "dubbo";
+            name = "dubbo"; // 默认dubbo协议
         }
 
         String host = protocolConfig.getHost();
@@ -309,8 +309,8 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
                         try {
                             Socket socket = new Socket();
                             try {
-                                SocketAddress addr = new InetSocketAddress(registryURL.getHost(), registryURL.getPort());
-                                socket.connect(addr, 1000);
+                                SocketAddress addr = new InetSocketAddress(registryURL.getHost(), registryURL.getPort()); // 连接注册中心
+                                socket.connect(addr, 1000); // 连接zookeeper 超时时间 1秒
                                 host = socket.getLocalAddress().getHostAddress();
                                 break;
                             } finally {
@@ -329,7 +329,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
             }
         }
 
-        Integer port = protocolConfig.getPort();
+        Integer port = protocolConfig.getPort(); // dubbo协议暴露出端口
         if (provider != null && (port == null || port == 0)) {
             port = provider.getPort();
         }
@@ -465,7 +465,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
 
             //配置不是remote的情况下做本地暴露 (配置为remote，则表示只暴露远程服务)
             if (!Constants.SCOPE_REMOTE.toString().equalsIgnoreCase(scope)) {
-                exportLocal(url);
+                exportLocal(url); // 本地暴露
             }
             //如果配置不是local则暴露为远程服务.(配置为local，则表示只暴露本地服务)
             if (! Constants.SCOPE_LOCAL.toString().equalsIgnoreCase(scope) ){
@@ -475,7 +475,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
                 if (registryURLs != null && registryURLs.size() > 0
                         && url.getParameter("register", true)) {
                     for (URL registryURL : registryURLs) {
-                        url = url.addParameterIfAbsent("dynamic", registryURL.getParameter("dynamic"));
+                        url = url.addParameterIfAbsent("dynamic", registryURL.getParameter("dynamic")); // dynamic 是否启用动态注册.如果设置为false，服务注册后，其状态显示为disable，需要人工启用，当服务不可用时，也不会自动移除，同样需要人工处理，此属性不要在生产环境上配置。
                         URL monitorUrl = loadMonitor(registryURL);
                         if (monitorUrl != null) {
                             url = url.addParameterAndEncoded(Constants.MONITOR_KEY, monitorUrl.toFullString());
@@ -484,13 +484,13 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
                             logger.info("Register dubbo service " + interfaceClass.getName() + " url " + url + " to registry " + registryURL);
                         }
                         Invoker<?> invoker = proxyFactory.getInvoker(ref, (Class) interfaceClass, registryURL.addParameterAndEncoded(Constants.EXPORT_KEY, url.toFullString()));
-
+                        // 通过代理调用暴露服务方法
                         Exporter<?> exporter = protocol.export(invoker);
                         exporters.add(exporter);
                     }
                 } else {
                     Invoker<?> invoker = proxyFactory.getInvoker(ref, (Class) interfaceClass, url);
-
+                    // 通过代理调用暴露服务方法
                     Exporter<?> exporter = protocol.export(invoker);
                     exporters.add(exporter);
                 }
@@ -499,7 +499,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
         this.urls.add(url);
     }
 
-
+    // 本地暴露服务
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void exportLocal(URL url) {
         if (!Constants.LOCAL_PROTOCOL.equalsIgnoreCase(url.getProtocol())) {
@@ -532,7 +532,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
         }
         for (ProtocolConfig protocolConfig : protocols) {
             if (StringUtils.isEmpty(protocolConfig.getName())) {
-                protocolConfig.setName("dubbo");
+                protocolConfig.setName("dubbo"); // 默认是dubbo协议
             }
             appendProperties(protocolConfig);
         }

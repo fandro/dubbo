@@ -78,7 +78,7 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
 		    SPRING_CONTEXT = applicationContext;
 		    try {
 	            Method method = applicationContext.getClass().getMethod("addApplicationListener", new Class<?>[]{ApplicationListener.class}); // 兼容Spring2.0.1
-	            method.invoke(applicationContext, new Object[] {this});
+	            method.invoke(applicationContext, new Object[] {this}); // 把自身加入ApplicationListener列表中
 	            supportedApplicationListener = true;
 	        } catch (Throwable t) {
                 if (applicationContext instanceof AbstractApplicationContext) {
@@ -106,11 +106,11 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
                 if (logger.isInfoEnabled()) {
                     logger.info("The service ready on spring started. service: " + getInterface());
                 }
-                export();
+                export(); // 暴露服务
             }
         }
     }
-    
+    // 延迟暴露机制
     private boolean isDelay() {
         Integer delay = getDelay();
         ProviderConfig provider = getProvider();
